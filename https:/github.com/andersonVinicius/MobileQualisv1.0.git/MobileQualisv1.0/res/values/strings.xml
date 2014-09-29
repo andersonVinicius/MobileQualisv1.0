@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mobile Qualis</string>
+    <string name="action_settings">Sobre  Mobile Qualis v1.0</string>
+    <string name="action_settings_back">Menu</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+    <string name="share">Compartilha</string>
+    <string name="add">Adicionar</string>
+    <string name="action_bar_share_with">Share with...</string>
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Título do Periódico</item>
+        <item>Classificação / Área de Avaliação</item>
+        <item>ISSN do Periódico</item>
+        <item>Lista Completa</item>
+        <item>Favoritos</item>
+        <item>Historico</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_photos</item>
+        <item>@drawable/ic_favorito</item>
+        <item>@drawable/ic_historico</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="title_activity_test">Test</string>
+    <string name="title_activity_apresentacao">Qualis CAPES | PPGEE -UFPA</string>
+    <string name="title_activity_lista">Resultado</string>
+
+</resources>

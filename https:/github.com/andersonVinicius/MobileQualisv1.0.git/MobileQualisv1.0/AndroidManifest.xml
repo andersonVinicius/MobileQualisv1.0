@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.br.activity"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="17" />
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:icon="@drawable/ic_launcher"
+        android:targetPackage="info.androidhive.slidingmenu" >
+    </instrumentation>
+
+    <uses-sdk
+        android:maxSdkVersion="17"
+        android:minSdkVersion="14" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name="com.br.activity.MainActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Test"
+            android:label="@string/title_activity_test" >
+        </activity>
+        <activity
+            android:name="com.br.activity.ApresentacaoActivity"
+            android:label="@string/title_activity_apresentacao"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.br.activity.ListaActivity"
+            android:label="@string/title_activity_lista" >
+        </activity>
+    </application>
+
+</manifest>
