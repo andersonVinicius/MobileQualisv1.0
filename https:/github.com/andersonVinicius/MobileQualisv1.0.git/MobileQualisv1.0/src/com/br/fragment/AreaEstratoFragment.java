@@ -19,6 +19,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -52,7 +53,7 @@ public class AreaEstratoFragment extends Fragment implements
 			"ZOOTECNIA / RECURSOS PESQUEIROS" };
 
 	private Spinner sp = null;
-	CheckBox a1, a2, b1, b2, b3, b4, b5, c;
+	CheckBox a1, a2, b1, b2, b3, b4, b5, c, todos;
 
 	public AreaEstratoFragment() {
 	}
@@ -77,48 +78,85 @@ public class AreaEstratoFragment extends Fragment implements
 		b4 = (CheckBox) getActivity().findViewById(R.id.checkBox_B4);
 		b5 = (CheckBox) getActivity().findViewById(R.id.checkBox_B5);
 		c = (CheckBox) getActivity().findViewById(R.id.checkBox_C);
+		todos = (CheckBox) getActivity().findViewById(R.id.checkBox_todos);
+
+		todos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+			public void onCheckedChanged(CompoundButton arg0, boolean isChecked) {
+				if (isChecked) {
+					a1.setEnabled(false);
+					a2.setEnabled(false);
+					b1.setEnabled(false);
+					b2.setEnabled(false);
+					b3.setEnabled(false);
+					b4.setEnabled(false);
+					b5.setEnabled(false);
+					c.setEnabled(false);
+					
+				} else {
+
+					a1.setEnabled(true);
+					a2.setEnabled(true);
+					b1.setEnabled(true);
+					b2.setEnabled(true);
+					b3.setEnabled(true);
+					b4.setEnabled(true);
+					b5.setEnabled(true);
+					c.setEnabled(true);
+				}
+			}
+
+		});
 
 		// final RadioGroup botaoRG = (RadioGroup) getActivity().findViewById(
 		// R.id.radioGroup1);
-		Button but = (Button) getActivity().findViewById(
-				R.id.button1);
+		Button but = (Button) getActivity().findViewById(R.id.button1);
 		but.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
 				ArrayList<String> lista = new ArrayList<String>();
+				if (todos.isChecked()) {
+					 lista.add(a1.getText().toString());
+					 lista.add(a2.getText().toString());
+					 lista.add(b1.getText().toString());
+					 lista.add(b2.getText().toString());
+					 lista.add(b3.getText().toString());
+					 lista.add(b4.getText().toString());
+					 lista.add(b5.getText().toString());
+					 lista.add(c.getText().toString());
 
-				if (a1.isChecked())
-					lista.add(a1.getText().toString());
-				if (a2.isChecked())
-					lista.add(a2.getText().toString());
-				if (b1.isChecked())
-					lista.add(b1.getText().toString());
-				if (b2.isChecked())
-					lista.add(b2.getText().toString());
-				if (b3.isChecked())
-					lista.add(b3.getText().toString());
-				if (b4.isChecked())
-					lista.add(b4.getText().toString());
-				if (b5.isChecked())
-					lista.add(b5.getText().toString());
-				if (c.isChecked())
-					lista.add(c.getText().toString());
+				} else {
+					if (a1.isChecked())
+						lista.add(a1.getText().toString());
+					if (a2.isChecked())
+						lista.add(a2.getText().toString());
+					if (b1.isChecked())
+						lista.add(b1.getText().toString());
+					if (b2.isChecked())
+						lista.add(b2.getText().toString());
+					if (b3.isChecked())
+						lista.add(b3.getText().toString());
+					if (b4.isChecked())
+						lista.add(b4.getText().toString());
+					if (b5.isChecked())
+						lista.add(b5.getText().toString());
+					if (c.isChecked())
+						lista.add(c.getText().toString());
+				}
 				String result = savebd(lista);
 
 				FragmentManager fragmentManager = null;
 				ListaTodosFragment fragment = null;
 
 				String area;
-				
 
 				area = sp.getSelectedItem().toString();
 
 				Log.i("CATEGORIA", "fragment:" + area);
-				
+
 				fragment = new ListaTodosFragment(area, result, 3);
-				
 
 				fragmentManager = getFragmentManager();
 				fragmentManager.beginTransaction()
@@ -142,7 +180,7 @@ public class AreaEstratoFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_area_estrato2,
+		View rootView = inflater.inflate(R.layout.fragment_area_estrato3,
 				container, false);
 		// ((RadioGroup) rootView.findViewById(R.id.radioGroup1))
 		// .setOnCheckedChangeListener(this);
@@ -153,7 +191,6 @@ public class AreaEstratoFragment extends Fragment implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		// TODO Auto-generated method stub
 
 	}
 

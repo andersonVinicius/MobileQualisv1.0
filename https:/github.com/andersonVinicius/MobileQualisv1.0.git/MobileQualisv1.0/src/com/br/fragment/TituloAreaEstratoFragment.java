@@ -12,16 +12,21 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -63,7 +68,7 @@ public class TituloAreaEstratoFragment extends Fragment implements
 	// private RadioButton radionBtn;
 
 	protected FragmentActivity activity;
-	CheckBox a1, a2, b1, b2, b3, b4, b5, c;
+	CheckBox a1, a2, b1, b2, b3, b4, b5, c, todos;
 
 	// private RadioGroup mRadioGroup;
 	// RadioGroup botaoRG;
@@ -97,8 +102,129 @@ public class TituloAreaEstratoFragment extends Fragment implements
 		b4 = (CheckBox) getActivity().findViewById(R.id.checkBox_B4);
 		b5 = (CheckBox) getActivity().findViewById(R.id.checkBox_B5);
 		c = (CheckBox) getActivity().findViewById(R.id.checkBox_C);
+		todos = (CheckBox) getActivity().findViewById(R.id.checkBox_todos);
+		todos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+			public void onCheckedChanged(CompoundButton arg0, boolean isChecked) {
+				if (isChecked) {
+					a1.setEnabled(false);
+					a2.setEnabled(false);
+					b1.setEnabled(false);
+					b2.setEnabled(false);
+					b3.setEnabled(false);
+					b4.setEnabled(false);
+					b5.setEnabled(false);
+					c.setEnabled(false);
+					
+				} else {
+
+					a1.setEnabled(true);
+					a2.setEnabled(true);
+					b1.setEnabled(true);
+					b2.setEnabled(true);
+					b3.setEnabled(true);
+					b4.setEnabled(true);
+					b5.setEnabled(true);
+					c.setEnabled(true);
+				}
+			}
+
+		});
 
 		text = (EditText) getActivity().findViewById(R.id.editText1);
+		text.setInputType(InputType.TYPE_TEXT_VARIATION_URI); // optional -
+		// sets the
+		// keyboard
+		// to URL
+		// mode
+
+		// kill keyboard when enter is pressed
+		text.setOnKeyListener(new OnKeyListener() {
+			/**
+			 * This listens for the user to press the enter button on the
+			 * keyboard and then hides the virtual keyboard
+			 */
+			@Override
+			public boolean onKey(View arg0, int arg1, KeyEvent event) {
+				// If the event is a key-down event on the "enter" button
+				if ((event.getAction() == KeyEvent.ACTION_DOWN)
+						&& (arg1 == KeyEvent.KEYCODE_ENTER)) {
+					InputMethodManager imm = (InputMethodManager) getActivity()
+							.getSystemService(
+									getActivity().INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
+					if (!text.getText().toString().equals("")) {
+						FragmentManager fragmentManager = null;
+						ListaTodosFragment fragment = null;
+
+						ArrayList<String> lista = new ArrayList<String>();
+
+						if (todos.isChecked()) {
+							lista.add(a1.getText().toString());
+							lista.add(a2.getText().toString());
+							lista.add(b1.getText().toString());
+							lista.add(b2.getText().toString());
+							lista.add(b3.getText().toString());
+							lista.add(b4.getText().toString());
+							lista.add(b5.getText().toString());
+							lista.add(c.getText().toString());
+
+						} else {
+							if (a1.isChecked())
+								lista.add(a1.getText().toString());
+							if (a2.isChecked())
+								lista.add(a2.getText().toString());
+							if (b1.isChecked())
+								lista.add(b1.getText().toString());
+							if (b2.isChecked())
+								lista.add(b2.getText().toString());
+							if (b3.isChecked())
+								lista.add(b3.getText().toString());
+							if (b4.isChecked())
+								lista.add(b4.getText().toString());
+							if (b5.isChecked())
+								lista.add(b5.getText().toString());
+							if (c.isChecked())
+								lista.add(c.getText().toString());
+						}
+						String result = savebd(lista);
+
+						String titulo = text.getText().toString();
+						String area;
+
+						area = sp.getSelectedItem().toString();
+
+						Log.i("CATEGORIA", "fragment:" + titulo);
+						Log.i("CATEGORIA", "fragment:" + area);
+						LinguagemDataSource source = new LinguagemDataSource(
+								getActivity());
+						fragment = new ListaTodosFragment(titulo, area, result,
+								4);
+						source.inserirHistorico2(titulo.trim(), "titulo",
+								area.trim(), result);
+
+						fragmentManager = getFragmentManager();
+						fragmentManager.beginTransaction()
+								.replace(R.id.frame_container, fragment)
+								.addToBackStack("tag2").commit();
+
+					} else {
+
+						AlertDialog.Builder alerta = new AlertDialog.Builder(
+								getActivity());
+						alerta.setIcon(R.drawable.ic_title4);
+						alerta.setTitle("Título Invalido");
+						alerta.setMessage("Digite um Título valido ! ");
+						alerta.show();
+
+					}
+
+					return true;
+				}
+				return false;
+			}
+
+		});
 
 		Button but = (Button) getActivity().findViewById(R.id.button1);
 		but.setOnClickListener(new View.OnClickListener() {
@@ -112,22 +238,34 @@ public class TituloAreaEstratoFragment extends Fragment implements
 
 					ArrayList<String> lista = new ArrayList<String>();
 
-					if (a1.isChecked())
+					if (todos.isChecked()) {
 						lista.add(a1.getText().toString());
-					if (a2.isChecked())
 						lista.add(a2.getText().toString());
-					if (b1.isChecked())
 						lista.add(b1.getText().toString());
-					if (b2.isChecked())
 						lista.add(b2.getText().toString());
-					if (b3.isChecked())
 						lista.add(b3.getText().toString());
-					if (b4.isChecked())
 						lista.add(b4.getText().toString());
-					if (b5.isChecked())
 						lista.add(b5.getText().toString());
-					if (c.isChecked())
 						lista.add(c.getText().toString());
+
+					} else {
+						if (a1.isChecked())
+							lista.add(a1.getText().toString());
+						if (a2.isChecked())
+							lista.add(a2.getText().toString());
+						if (b1.isChecked())
+							lista.add(b1.getText().toString());
+						if (b2.isChecked())
+							lista.add(b2.getText().toString());
+						if (b3.isChecked())
+							lista.add(b3.getText().toString());
+						if (b4.isChecked())
+							lista.add(b4.getText().toString());
+						if (b5.isChecked())
+							lista.add(b5.getText().toString());
+						if (c.isChecked())
+							lista.add(c.getText().toString());
+					}
 					String result = savebd(lista);
 
 					String titulo = text.getText().toString();
@@ -141,7 +279,7 @@ public class TituloAreaEstratoFragment extends Fragment implements
 							getActivity());
 					fragment = new ListaTodosFragment(titulo, area, result, 4);
 					source.inserirHistorico2(titulo.trim(), "titulo",
-							area.trim(),result);
+							area.trim(), result);
 
 					fragmentManager = getFragmentManager();
 					fragmentManager.beginTransaction()
@@ -168,8 +306,8 @@ public class TituloAreaEstratoFragment extends Fragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_titulo_area_estrato,
-				container, false);
+		View rootView = inflater.inflate(
+				R.layout.fragment_titulo_area_estrato3, container, false);
 		// ((RadioGroup) rootView.findViewById(R.id.radioGroup1))
 		// .setOnCheckedChangeListener(this);
 

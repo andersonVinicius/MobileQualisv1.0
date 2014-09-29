@@ -243,7 +243,7 @@ public class MainActivity extends Activity {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction()
 					.replace(R.id.frame_container, fragment)
-					.addToBackStack(null).commit();
+					.commit();
 
 			// update selected item and title, then close the drawerag
 			mDrawerList.setItemChecked(position, true);

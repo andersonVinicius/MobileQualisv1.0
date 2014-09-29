@@ -117,9 +117,10 @@ public final class R {
         public static final int tuto=0x7f02001b;
     }
     public static final class id {
-        public static final int ADD=0x7f0a0030;
-        public static final int Area=0x7f0a0029;
-        public static final int action_settings=0x7f0a002e;
+        public static final int ADD=0x7f0a0032;
+        public static final int Area=0x7f0a002b;
+        public static final int TextView01=0x7f0a0027;
+        public static final int action_settings=0x7f0a0030;
         public static final int button1=0x7f0a0024;
         public static final int checkBox_A1=0x7f0a000d;
         public static final int checkBox_A2=0x7f0a001e;
@@ -129,22 +130,23 @@ public final class R {
         public static final int checkBox_B4=0x7f0a0023;
         public static final int checkBox_B5=0x7f0a0022;
         public static final int checkBox_C=0x7f0a001f;
+        public static final int checkBox_todos=0x7f0a0025;
         public static final int counter=0x7f0a000c;
         public static final int drawer_layout=0x7f0a0007;
-        public static final int editText1=0x7f0a0025;
-        public static final int estrato=0x7f0a0028;
+        public static final int editText1=0x7f0a0026;
+        public static final int estrato=0x7f0a002a;
         public static final int frame_container=0x7f0a0008;
         public static final int icon=0x7f0a000a;
         public static final int imageButton1=0x7f0a001c;
         public static final int imageView1=0x7f0a0001;
-        public static final int issn=0x7f0a0026;
+        public static final int issn=0x7f0a0028;
         public static final int linearLayout1=0x7f0a001b;
         public static final int linearLayout2=0x7f0a0000;
         public static final int list_slidermenu=0x7f0a0009;
-        public static final int lixo=0x7f0a0031;
-        public static final int menu_item_share_action_provider_action_bar=0x7f0a002c;
-        public static final int menu_item_share_action_provider_overflow=0x7f0a002d;
-        public static final int parametro=0x7f0a002b;
+        public static final int lixo=0x7f0a0033;
+        public static final int menu_item_share_action_provider_action_bar=0x7f0a002e;
+        public static final int menu_item_share_action_provider_overflow=0x7f0a002f;
+        public static final int parametro=0x7f0a002d;
         public static final int radioGroup1=0x7f0a0010;
         public static final int radio_A1=0x7f0a0013;
         public static final int radio_A2=0x7f0a0014;
@@ -156,7 +158,7 @@ public final class R {
         public static final int radio_C=0x7f0a001a;
         public static final int radio_Todo=0x7f0a0011;
         public static final int scrollView1=0x7f0a000e;
-        public static final int share=0x7f0a002f;
+        public static final int share=0x7f0a0031;
         public static final int spinner3=0x7f0a000f;
         public static final int tableLayout1=0x7f0a0012;
         public static final int textView1=0x7f0a0002;
@@ -164,9 +166,9 @@ public final class R {
         public static final int textView3=0x7f0a0004;
         public static final int textView4=0x7f0a0003;
         public static final int textView5=0x7f0a0006;
-        public static final int tipo=0x7f0a002a;
+        public static final int tipo=0x7f0a002c;
         public static final int title=0x7f0a000b;
-        public static final int titulo=0x7f0a0027;
+        public static final int titulo=0x7f0a0029;
     }
     public static final class layout {
         public static final int activity_apresentacao=0x7f030000;
@@ -176,13 +178,15 @@ public final class R {
         public static final int estrato_itens=0x7f030004;
         public static final int fragment_area_estrato=0x7f030005;
         public static final int fragment_area_estrato2=0x7f030006;
-        public static final int fragment_favorito=0x7f030007;
-        public static final int fragment_issn=0x7f030008;
-        public static final int fragment_lista_todos=0x7f030009;
-        public static final int fragment_titulo_area_estrato=0x7f03000a;
-        public static final int fragment_titulo_area_estrato2=0x7f03000b;
-        public static final int item_lista_todos=0x7f03000c;
-        public static final int registro=0x7f03000d;
+        public static final int fragment_area_estrato3=0x7f030007;
+        public static final int fragment_favorito=0x7f030008;
+        public static final int fragment_issn=0x7f030009;
+        public static final int fragment_lista_todos=0x7f03000a;
+        public static final int fragment_titulo_area_estrato=0x7f03000b;
+        public static final int fragment_titulo_area_estrato2=0x7f03000c;
+        public static final int fragment_titulo_area_estrato3=0x7f03000d;
+        public static final int item_lista_todos=0x7f03000e;
+        public static final int registro=0x7f03000f;
     }
     public static final class menu {
         public static final int action_bar_share_action_provider=0x7f090000;
