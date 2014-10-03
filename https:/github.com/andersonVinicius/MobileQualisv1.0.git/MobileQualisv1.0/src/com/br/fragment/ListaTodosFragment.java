@@ -171,7 +171,7 @@ public class ListaTodosFragment extends ListFragment {
 				fragment = new TituloAreaEstratoFragment();
 				break;
 			case 5:
-				fragment = new WhatsHotFragment();
+			//	fragment = new WhatsHotFragment();
 				break;
 
 			default:

@@ -162,10 +162,10 @@ public final class R {
         public static final int spinner3=0x7f0a000f;
         public static final int tableLayout1=0x7f0a0012;
         public static final int textView1=0x7f0a0002;
-        public static final int textView2=0x7f0a0005;
-        public static final int textView3=0x7f0a0004;
+        public static final int textView2=0x7f0a0006;
+        public static final int textView3=0x7f0a0005;
         public static final int textView4=0x7f0a0003;
-        public static final int textView5=0x7f0a0006;
+        public static final int textView5=0x7f0a0004;
         public static final int tipo=0x7f0a002c;
         public static final int title=0x7f0a000b;
         public static final int titulo=0x7f0a0029;
