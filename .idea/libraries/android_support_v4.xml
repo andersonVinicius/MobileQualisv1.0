@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="android-support-v4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/https:/github.com/andersonVinicius/MobileQualisv1.0.git/MobileQualisv1.0/libs/android-support-v4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

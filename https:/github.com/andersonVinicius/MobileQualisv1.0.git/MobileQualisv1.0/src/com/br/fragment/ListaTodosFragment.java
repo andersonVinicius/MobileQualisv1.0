@@ -90,7 +90,7 @@ public class ListaTodosFragment extends ListFragment {
 		switch (a) {
 
 		case 1:
-			linguagens = source.allLinguagens();
+		//	linguagens = source.allLinguagens();
 			
 
 			break;

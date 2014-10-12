@@ -7,7 +7,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+import com.br.model.MyObject;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,12 +20,13 @@ public class LinguagemDataSource {
 	private static final String CATEGORIA = null;
 	private SQLiteDatabase db;
 	private DatabaseHelper helper; // resposavel pela manuten����o do codgo
-    static private Date data;
+	static private Date data;
+
 	public LinguagemDataSource(Context context) {
 		helper = new DatabaseHelper(context);
 		db = helper.getDatabase();
 		data = new Date();
-		
+
 	}
 
 	public List<JSONObject> todosEstratoPorTitulo(String titulo, String area) {
@@ -130,24 +131,22 @@ public class LinguagemDataSource {
 
 	}
 
-	public List<JSONObject> allLinguagens() {
+	public List<MyObject> allLinguagens(String titulo) {
 
-		List<JSONObject> result = new ArrayList<JSONObject>();
-
-		Cursor cursor = db.query("tab_todo", new String[] { "titulo", }, null,
-				null, null, null, null);
+		List<MyObject> result = new ArrayList<MyObject>();
+		String sql = "SELECT titulo FROM tab_todo WHERE titulo LIKE" + "'%"
+				+ titulo + "%' ORDER BY id Desc LIMIT 1,5";
+		Cursor cursor = db.rawQuery(sql, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			JSONObject obj = new JSONObject();
-			try {
-				obj.put("titulo", "Título: " + cursor.getString(0));
-				// obj.put("titulo", "Título: " + cursor.getString(1));
-				// obj.put("estrato", "Estrato: " + cursor.getString(2));
-				// obj.put("area", "Area: " + cursor.getString(3));
-			} catch (JSONException e) {
+			// JSONObject obj = new JSONObject();
 
-			}
-			result.add(obj);
+			String objectName = cursor.getString(cursor
+					.getColumnIndex("titulo"));
+			MyObject myObject = new MyObject(objectName);
+			// obj.put("titulo", "Título: " + cursor.getString(0));
+			result.add(myObject);
+
 			cursor.moveToNext();
 		}
 
@@ -197,7 +196,7 @@ public class LinguagemDataSource {
 		Cursor cursor = db.query("tab_todo", new String[] { "id", "issn",
 				"titulo", "estrato", "area" }, "titulo LIKE " + "'%" + titulo
 				+ "%'AND area LIKE" + "'%" + area + "%'AND estrato in "
-				+ estrato , null, null, null, "estrato ASC");
+				+ estrato, null, null, null, "estrato ASC");
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			JSONObject obj = new JSONObject();
@@ -223,12 +222,13 @@ public class LinguagemDataSource {
 	public List<JSONObject> porAreaEstrato(String area, String estrato) {
 		List<JSONObject> result = new ArrayList<JSONObject>();
 		Log.i(CATEGORIA, estrato);
-		Cursor cursor = db.query("tab_todo", new String[] { "id", "issn",
-				"titulo", "estrato", "area" }, "area=" + "'" + area + "'"
-				+ " and estrato in "+ estrato, null, null, null,
-				"estrato ASC");
+		Cursor cursor = db
+				.query("tab_todo", new String[] { "id", "issn", "titulo",
+						"estrato", "area" }, "area=" + "'" + area + "'"
+						+ " and estrato in " + estrato, null, null, null,
+						"estrato ASC");
 		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) { 
+		while (!cursor.isAfterLast()) {
 			JSONObject obj = new JSONObject();
 			try {
 				obj.put("id", cursor.getString(0));
@@ -277,30 +277,39 @@ public class LinguagemDataSource {
 
 	public void inserirHistorico(String parametro, String tipo) {
 
-		String sql = "insert into registro (parametro,tipo) values(" +"'"+ 
-		parametro+ "'"+","+ "'" +tipo+ "'"+")";
+		String sql = "insert into registro (parametro,tipo) values(" + "'"
+				+ parametro + "'" + "," + "'" + tipo + "'" + ")";
 		db.execSQL(sql);
 
 	}
-	/*public void inserirHistorico3(String parametro, String tipo, String area) {
-       
-		Log.i("CATEGORIA", "passou em historico 3");
-		Log.i("CATEGORIA", parametro);
-		Log.i("CATEGORIA", tipo);
-		Log.i("CATEGORIA", area);
-		String estrato="xx";
-		String sql = "insert into registro (parametro,tipo,area,estrato) values(" +"'"
-				+ parametro+ "',"+"'" +tipo+ "',"+"'"+ area+ "',"+ "'" 
-				+estrato+ "'"+ ")";
-		db.execSQL(sql);
 
-	}*/
-	
-	public void inserirHistorico2(String parametro, String tipo, String area, String estrato) {
+	/*
+	 * public void inserirHistorico3(String parametro, String tipo, String area)
+	 * {
+	 * 
+	 * Log.i("CATEGORIA", "passou em historico 3"); Log.i("CATEGORIA",
+	 * parametro); Log.i("CATEGORIA", tipo); Log.i("CATEGORIA", area); String
+	 * estrato="xx"; String sql =
+	 * "insert into registro (parametro,tipo,area,estrato) values(" +"'" +
+	 * parametro+ "',"+"'" +tipo+ "',"+"'"+ area+ "',"+ "'" +estrato+ "'"+ ")";
+	 * db.execSQL(sql);
+	 * 
+	 * }
+	 */
+
+	public void inserirHistorico2(String parametro, String tipo, String area,
+			String estrato) {
 		Log.i("CATEGORIA", "passou em historico 2");
-		String sql = "insert into registro (parametro,tipo,area,estrato) values(" +"'"
-		+ parametro+ "',"+"'" +tipo+ "',"+"'"+ area+ "',"+
-		'"'+estrato+'"'+ ")";
+		String sql = "insert into registro (parametro,tipo,area,estrato) values("
+				+ "'"
+				+ parametro
+				+ "',"
+				+ "'"
+				+ tipo
+				+ "',"
+				+ "'"
+				+ area
+				+ "'," + '"' + estrato + '"' + ")";
 		db.execSQL(sql);
 
 	}
@@ -308,17 +317,18 @@ public class LinguagemDataSource {
 	public List<JSONObject> listaHistorico() {
 		List<JSONObject> result = new ArrayList<JSONObject>();
 
-		Cursor cursor = db.query("registro", new String[] { "id","tipo","parametro","area","estrato", "data" },
-				null, null, null, null, null);
+		Cursor cursor = db.query("registro", new String[] { "id", "tipo",
+				"parametro", "area", "estrato", "data" }, null, null, null,
+				null, null);
 		cursor.moveToLast();
 		while (!cursor.isBeforeFirst()) {
 			JSONObject obj = new JSONObject();
 			try {
 				obj.put("id", cursor.getString(0));
-				obj.put("tipo",cursor.getString(1));
-				obj.put("parametro",cursor.getString(2));
+				obj.put("tipo", cursor.getString(1));
+				obj.put("parametro", cursor.getString(2));
 				obj.put("area", cursor.getString(3));
-				obj.put("estrato",cursor.getString(4));
+				obj.put("estrato", cursor.getString(4));
 				obj.put("data", cursor.getString(5));
 
 			} catch (JSONException e) {
@@ -332,6 +342,7 @@ public class LinguagemDataSource {
 		return result;
 
 	}
+
 	public void deleteHistorico(int id) {
 		Log.i(CATEGORIA, "Deletou registro");
 		// String sql =
@@ -341,9 +352,9 @@ public class LinguagemDataSource {
 
 		Log.i(CATEGORIA, "Deletou registro");
 	}
-	
-	public void fechar(){
-		if(db!=null){
+
+	public void fechar() {
+		if (db != null) {
 			db.close();
 		}
 	}

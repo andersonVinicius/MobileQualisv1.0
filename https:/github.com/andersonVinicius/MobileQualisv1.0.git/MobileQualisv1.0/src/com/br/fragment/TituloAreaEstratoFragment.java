@@ -1,9 +1,12 @@
 package com.br.fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.br.activity.R;
 import com.br.dao.LinguagemDataSource;
+
+import com.br.model.MyObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,7 +15,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -41,7 +47,8 @@ import android.widget.Toast;
 
 public class TituloAreaEstratoFragment extends Fragment implements
 		OnItemClickListener, OnCheckedChangeListener {
-	private EditText text;
+	protected static final String TAG = null;
+	private AutoCompleteTextView text;
 	private static String[] area = { "ENGENHARIAS IV",
 			"ADMINISTRAÇÃO, CIÊNCIAS CONTÁBEIS E TURISMO",
 			"ANTROPOLOGIA / ARQUEOLOGIA", "ARQUITETURA E URBANISMO",
@@ -69,6 +76,9 @@ public class TituloAreaEstratoFragment extends Fragment implements
 
 	protected FragmentActivity activity;
 	CheckBox a1, a2, b1, b2, b3, b4, b5, c, todos;
+	LinguagemDataSource lst;
+	String[] item = new String[] { "Please search..." };
+	ArrayAdapter<String> adp1;
 
 	// private RadioGroup mRadioGroup;
 	// RadioGroup botaoRG;
@@ -115,7 +125,7 @@ public class TituloAreaEstratoFragment extends Fragment implements
 					b4.setEnabled(false);
 					b5.setEnabled(false);
 					c.setEnabled(false);
-					
+
 				} else {
 
 					a1.setEnabled(true);
@@ -130,8 +140,43 @@ public class TituloAreaEstratoFragment extends Fragment implements
 			}
 
 		});
+		lst = new LinguagemDataSource(getActivity());
+		text = (AutoCompleteTextView) getActivity()
+				.findViewById(R.id.editText1);
+		text.addTextChangedListener(new TextWatcher() {
 
-		text = (EditText) getActivity().findViewById(R.id.editText1);
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				Log.e(TAG, "User input: " + s);
+
+				// query the database based on the user input
+				item = getItemsFromDb(s.toString());
+
+				// update the adapater
+				adp1.notifyDataSetChanged();
+				adp1 = new ArrayAdapter<String>(getActivity(),
+						android.R.layout.simple_list_item_activated_1, item);
+				text.setAdapter(adp1);
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		adp1 = new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_activated_1, item);
+		text.setAdapter(adp1);
+
 		text.setInputType(InputType.TYPE_TEXT_VARIATION_URI); // optional -
 		// sets the
 		// keyboard
@@ -356,5 +401,23 @@ public class TituloAreaEstratoFragment extends Fragment implements
 		}
 		return "(" + query1 + ")";
 
+	}
+
+	public String[] getItemsFromDb(String titulo) {
+
+		// add items on the array dynamically
+		List<MyObject> products = lst.allLinguagens(titulo);
+		int rowCount = products.size();
+
+		String[] item = new String[rowCount];
+		int x = 0;
+
+		for (MyObject record : products) {
+
+			item[x] = record.objectName;
+			x++;
+		}
+
+		return item;
 	}
 }
